@@ -1,12 +1,8 @@
-# Web framework
 fastapi==0.115.0
 uvicorn[standard]==0.30.6
-
-# Data validation
-pydantic==2.9.2
-
-# Environment variables
+pydantic
+loguru
 python-dotenv==1.0.1
-
-# OpenAI SDK (since your model_manager likely uses it)
 openai
+instructor
+python-jose
