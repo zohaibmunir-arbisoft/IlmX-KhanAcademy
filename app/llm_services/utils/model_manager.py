@@ -5,7 +5,6 @@ import instructor
 from loguru import logger
 from openai import OpenAI
 from dotenv import load_dotenv
-
 load_dotenv()
 
 OPENAI_API_KEY = os.getenv("OPENAI_KEY")
@@ -14,6 +13,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_KEY")
 class OpenAIModelManager:
     def __init__(self):
         self.model = self.create_model_instance(OPENAI_API_KEY)
+        self.openai_model = OpenAI(api_key=OPENAI_API_KEY)
 
     def create_model_instance(
         self,
@@ -35,10 +35,10 @@ class OpenAIModelManager:
         )
         return response.model_dump_json(), metadata.usage
 
-    def extract_text_from_image(self, base64_image):
+    def extract_text_from_image(self, base64_image, model="gpt-4o-mini"):
         """Uses gpt-4o-mini to extract text from a single image."""
         response = self.model.responses.create(
-            model="gpt-4o-mini",
+            model=model,
             input=[
                 {
                     "role": "user",
@@ -53,6 +53,36 @@ class OpenAIModelManager:
             ],
         )
         return response.output_text.strip(), response.usage
+
+    def extract_text_from_pdf(self, base64_pdf, response_model, system_prompt, user_prompt, model="gpt-4o-mini"):
+        """Uses gpt-4o-mini to extract text from a single PDF."""
+        response = self.openai_model.chat.completions.parse(
+            model=model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": system_prompt
+                },
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "file",
+                            "file": {
+                                "filename": "temp.pdf",
+                                "file_data": f"data:application/pdf;base64,{base64_pdf}",
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "text": user_prompt,
+                        }
+                    ],
+                },
+            ],
+        response_format=response_model,
+        )
+        return response.choices[0].message.parsed, response.usage
 
     def invoke_chat_model_with_file(self, system_prompt, user_prompt, response_model, model="gpt-5"):
         response, metadata = self.model.chat.completions.create_with_completion(

@@ -57,3 +57,4 @@ class LLMPrompts:
                                         "understanding or reflective question. 3: Tool used effectively to check learning and wrap up key ideas with clear, thoughtful questions. " \
                                         "Finally, provide a feedback for each dimension and why you provided that score."
     lesson_plan_file_observation_user = "The lesson plan prepared by the teacher extracted from the images is as follows: "
+    lesson_plan_pdf_observation_user = "The lesson plan prepared by the teacher in the pdf is as follows: "

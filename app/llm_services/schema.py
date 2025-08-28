@@ -1,9 +1,25 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 # ------------------Request Schema------------------------------------
 class LessonPlanEvaluationRequest(BaseModel):
     images: list[str]
     model: str
+
+    @field_validator("model")
+    def check_model(cls, value: str):
+        if value not in ["gpt-5-mini", "gpt-5", "gpt-4o-mini", "gpt-4o", "gpt-4.1-mini"]:
+            raise ValueError(f"Model: {value} isn't supported. Kindly choose one of [gpt-5-mini, gpt-5, gpt-4o-mini, gpt-4o, gpt-4.1-mini]")
+        return value
+
+class LessonPlanEvaluationPDFRequest(BaseModel):
+    pdf_base64_str: str
+    model: str
+
+    @field_validator("model")
+    def check_model(cls, value: str):
+        if value not in ["gpt-5-mini", "gpt-5", "gpt-4o-mini", "gpt-4o", "gpt-4.1-mini"]:
+            raise ValueError(f"Model: {value} isn't supported. Kindly choose one of [gpt-5-mini, gpt-5, gpt-4o-mini, gpt-4o, gpt-4.1-mini]")
+        return value
 
 # ------------------Response Schema------------------------------------
 class ObjectivesAndLessonPlanning(BaseModel):
@@ -36,3 +52,6 @@ class LessonPlanObservation(BaseModel):
     effectiveness_of_warmup: EffectivenessOfWarmUpActivity
     main_activity: MainActivity
     effectiveness_of_wrapup: EffectivenessOfWrapUpActivity
+
+class PDFText(BaseModel):
+    text: str
