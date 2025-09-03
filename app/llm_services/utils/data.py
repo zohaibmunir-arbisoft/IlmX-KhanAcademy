@@ -55,6 +55,32 @@ class LLMPrompts:
                                         " Formative Assessment and Consolidation Tools Exit ticket, MCQ generator, question generator, discussion prompt. 0: No tool used, 1: Tool (e.g., " \
                                         "Exit Ticket, MCQ, Question Generator) used, but not aligned with objectives. 2: Tool used appropriately; includes at least one clear check for " \
                                         "understanding or reflective question. 3: Tool used effectively to check learning and wrap up key ideas with clear, thoughtful questions. " \
-                                        "Finally, provide a feedback for each dimension and why you provided that score."
+                                        "Finally, provide a feedback for each dimension and why you provided that score, and provide suggesstions on how they can improve the lesson" \
+                                        "plan and an overall 3-4 line short feedback."
     lesson_plan_file_observation_user = "The lesson plan prepared by the teacher extracted from the images is as follows: "
     lesson_plan_pdf_observation_user = "The lesson plan prepared by the teacher in the pdf is as follows: "
+
+    lesson_plan_feedback_report =   "Overall Score: {obtained_score} / {total_score} ({percentage_score}%)" \
+                                    "\nIndicator 1: Objectives & Lesson Planning (Score: {id1_obtained_score} / {id1_total_score})\n" \
+                                    "\n- Criterion A: 5-part Lesson Plan – [Rating: {id1_cr1_rating}]" \
+                                    "\n- Criterion B: Appropriateness (Resources) – [Rating: {id1_cr2_rating}]" \
+                                    "\n- Criterion C: Time Allocation – [Rating: {id1_cr3_rating}]" \
+                                    "\nFeedback: \n{id1_feedback}" \
+                                    "\nIndicator 2: Appropriateness of Lesson Objective (Score: {id2_obtained_score} / {id2_total_score})\n" \
+                                    "\n- Criterion A: Relevance of Lesson Objective – [Rating: {id2_cr1_rating}]" \
+                                    "\nFeedback: \n{id2_feedback}" \
+                                    "\nIndicator 3: Effectiveness Of Warm-up Activity (Score: {id3_obtained_score} / {id3_total_score})\n" \
+                                    "\n- Criterion A: Effectiveness of Warm-up Activity – [Rating: {id3_cr1_rating}]" \
+                                    "\nFeedback: \n{id3_feedback}" \
+                                    "\nIndicator 4: Main Activity (Direct Instructions & Student Practice) (Score: {id4_obtained_score} / {id4_total_score})\n" \
+                                    "\n- Criterion A: Clearance and Alignment of Main Activity – [Rating: {id4_cr1_rating}]" \
+                                    "\n- Criterion B: Use Of Tools For Relevance To Context – [Rating: {id4_cr2_rating}]" \
+                                    "\n- Criterion C: Student Participation and Encouragement – [Rating: {id4_cr3_rating}]" \
+                                    "\nFeedback: \n{id4_feedback}" \
+                                    "\nIndicator 5: Effectiveness Of Wrap-up Activity (Score: {id5_obtained_score} / {id5_total_score})\n" \
+                                    "\n- Criterion A: Effective use of Formative Assessment and Consolidation Tools – [Rating: {id5_cr1_rating}]" \
+                                    "\nFeedback: \n{id5_feedback}" \
+                                    "\n\nSuggestions For Improvement:" \
+                                    "\n{suggestions}" \
+                                    "\nFinal Remarks:" \
+                                    "\n{final_remarks}"

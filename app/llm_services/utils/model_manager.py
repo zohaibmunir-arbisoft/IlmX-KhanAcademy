@@ -99,6 +99,7 @@ class OpenAIModelManager:
                 }],}
             ],
             response_model=response_model,
-            temperature=0.2
+            temperature=0.1,
+            top_p=0.3
         )
         return response.model_dump_json(), metadata.usage

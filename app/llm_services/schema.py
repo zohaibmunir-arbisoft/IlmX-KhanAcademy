@@ -52,6 +52,8 @@ class LessonPlanObservation(BaseModel):
     effectiveness_of_warmup: EffectivenessOfWarmUpActivity
     main_activity: MainActivity
     effectiveness_of_wrapup: EffectivenessOfWrapUpActivity
-
+    suggestions_for_improvement: list[str]
+    final_remarks: str
+    
 class PDFText(BaseModel):
     text: str
