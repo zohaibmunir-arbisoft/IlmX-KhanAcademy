@@ -38,7 +38,7 @@ class OpenAIModelManager:
             temperature=0.1,
             top_p = 0.3
         )
-        return response.model_dump_json(), metadata.usage
+        return response, metadata.usage
 
     def extract_text_from_image(self, base64_image, model="gpt-4o-mini"):
         """Uses gpt-4o-mini to extract text from a single image."""
