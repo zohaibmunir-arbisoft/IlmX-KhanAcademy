@@ -22,7 +22,10 @@ class OpenAIModelManager:
         return instructor.from_openai(OpenAI(api_key=openai_api_key))
 
     def invoke(self, system_prompt, user_prompt, response_model, model):
-        return self.invoke_chat_model(system_prompt=system_prompt, user_prompt=user_prompt, response_model=response_model, model=model)
+        try:
+            return self.invoke_chat_model(system_prompt=system_prompt, user_prompt=user_prompt, response_model=response_model, model=model)
+        except Exception as e:
+            return self.invoke_chat_model(system_prompt=system_prompt, user_prompt=user_prompt + " ,make sure the returned json schema is followed.", response_model=response_model, model=model)
 
     def invoke_chat_model(self, system_prompt, user_prompt, response_model, model="gpt-5"):
         response, metadata = self.model.chat.completions.create_with_completion(
@@ -32,6 +35,8 @@ class OpenAIModelManager:
                 {"role": "user", "content": user_prompt}
             ],
             response_model=response_model,
+            temperature=0.1,
+            top_p = 0.3
         )
         return response.model_dump_json(), metadata.usage
 
