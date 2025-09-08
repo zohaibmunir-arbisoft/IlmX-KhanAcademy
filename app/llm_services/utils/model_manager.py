@@ -28,15 +28,18 @@ class OpenAIModelManager:
             return self.invoke_chat_model(system_prompt=system_prompt, user_prompt=user_prompt + " ,make sure the returned json schema is followed.", response_model=response_model, model=model)
 
     def invoke_chat_model(self, system_prompt, user_prompt, response_model, model="gpt-5"):
+        kwargs = {}
+        if model not in ["gpt-5-mini", "gpt-5"]:
+            kwargs["temperature"] = 0.1
+            kwargs["top_p"] = 0.3
         response, metadata = self.model.chat.completions.create_with_completion(
             model=model,
             messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
             ],
             response_model=response_model,
-            temperature=0.1,
-            top_p = 0.3
+            **kwargs
         )
         return response, metadata.usage
 
